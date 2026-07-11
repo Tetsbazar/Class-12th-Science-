@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class 11 - 3rd Semester Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #1a7a4a;
+            --accent: #f9a825;
+            --bg-main: #f4f8f5;
+            --bg-card: #ffffff;
+            --text-main: #1c2e24;
+            --text-meta: #5a7a66;
+            --border-color: #c5dccb;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Syne', sans-serif; background: var(--bg-main); color: var(--text-main); min-height: 100vh; }
+        a { text-decoration: none; }
+
+        /* Top Bar */
+        .top-bar { background: var(--primary); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; color: white; box-shadow: 0 4px 15px rgba(26,122,74,0.2); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 1px; }
+        .logo span { color: var(--accent); }
+        .auth-status { font-family: 'Tiro Bangla', serif; font-size: 1rem; font-weight: bold; background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px;}
+
+        /* Main Container */
+        .main-container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+        .header-text { text-align: center; margin-bottom: 2rem; }
+        .header-text h1 { font-family: 'Tiro Bangla', serif; font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem; line-height: 1.4; }
+        .header-text p { font-family: 'Tiro Bangla', serif; font-size: 1.05rem; color: var(--text-meta); font-weight: bold; }
+
+        /* Demo Section */
+        .demo-section { background: linear-gradient(135deg, #f9a825, #f57f17); padding: 25px; border-radius: 16px; text-align: center; margin-bottom: 30px; box-shadow: 0 8px 20px rgba(249, 168, 37, 0.3); }
+        .demo-section h2 { font-family: 'Tiro Bangla', serif; color: white; font-size: 1.8rem; margin-bottom: 10px; }
+        .demo-section p { font-family: 'Tiro Bangla', serif; color: rgba(255,255,255,0.9); font-size: 1.1rem; font-weight: bold; margin-bottom: 20px; }
+
+        /* Demo Button */
+        .demo-btn { background: white; color: #f57f17; padding: 12px 30px; border-radius: 30px; font-weight: bold; font-size: 1.2rem; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: 0.3s; font-family: 'Tiro Bangla', serif; margin-bottom: 15px; margin-right: 10px;}
+        .demo-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
+
+        /* WhatsApp Button */
+        .wa-btn { background: #25D366; color: white; padding: 12px 20px; border-radius: 8px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Tiro Bangla', serif; font-size: 1.05rem; transition: 0.2s; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2); cursor: pointer;}
+        .wa-btn:hover { background: #128C7E; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3); }
+
+        /* Subject Grid */
+        .subject-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+        .subject-card { background: var(--bg-card); border-radius: 16px; padding: 25px; border: 2px solid var(--border-color); box-shadow: 0 5px 15px rgba(0,0,0,0.03); transition: 0.3s; }
+        .subject-card:hover { border-color: var(--primary); box-shadow: 0 10px 30px rgba(26,122,74,0.1); }
+        .subject-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px dashed var(--border-color); }
+        .subject-icon { font-size: 2.2rem; background: var(--bg-main); width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid var(--border-color); }
+        .subject-title { font-size: 1.5rem; font-weight: 700; color: var(--primary); font-family: 'Tiro Bangla', serif;}
+
+        /* Chapter List */
+        .chapter-list { display: flex; flex-direction: column; gap: 10px; }
+        .chapter-link { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: var(--bg-main); border-radius: 10px; color: var(--text-main); font-weight: bold; font-size: 1.05rem; transition: 0.2s; border: 1px solid transparent; font-family: 'Tiro Bangla', serif; cursor: pointer; }
+        .chapter-link:hover { background: var(--bg-card); border-color: var(--primary); color: var(--primary); padding-left: 20px; }
+        .chapter-meta { font-size: 0.85rem; color: var(--text-meta); background: rgba(0,0,0,0.05); padding: 3px 8px; border-radius: 6px; font-family: 'Syne', sans-serif;}
+
+        /* LOGIN MODAL */
+        .login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px); }
+        .login-overlay.active { display: flex; }
+        .login-modal { background: white; padding: 2rem; border-radius: 16px; width: 90%; max-width: 380px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); }
+        .login-modal h2 { font-family: 'Tiro Bangla', serif; color: var(--primary); font-size: 1.4rem; margin-bottom: 0.5rem; text-align: center; }
+        .login-modal p { font-family: 'Tiro Bangla', serif; color: var(--text-meta); font-size: 0.9rem; margin-bottom: 1.5rem; text-align: center; }
+
+        .input-group { margin-bottom: 1.2rem; }
+        .input-group label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--text-main); margin-bottom: 5px; font-family: 'Tiro Bangla', serif; }
+        .input-group input { width: 100%; padding: 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-family: 'Syne', sans-serif; font-size: 0.95rem; outline: none; transition: 0.2s; }
+        .input-group input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,122,74,0.1); }
+
+        .login-btn { width: 100%; background: var(--primary); color: white; border: none; padding: 12px; border-radius: 8px; font-family: 'Tiro Bangla', serif; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: 0.2s; margin-bottom: 8px; }
+        .cancel-btn { width: 100%; background: transparent; color: var(--text-meta); border: 1.5px solid var(--border-color); padding: 10px; border-radius: 8px; font-family: 'Tiro Bangla', serif; font-size: 1rem; font-weight: 700; cursor: pointer; }
+        .error-msg { color: #dc3545; font-size: 0.85rem; font-weight: 700; margin-top: 10px; font-family: 'Tiro Bangla', serif; display: none; text-align: center; margin-bottom:10px; }
+
+        /* WhatsApp Box in Modal */
+        .wa-box { margin-top: 20px; border-top: 2px dashed var(--border-color); padding-top: 15px; text-align: center; }
+        .wa-box p { font-size: 0.85rem; color: var(--text-main); font-weight: bold; margin-bottom: 10px; }
+
+        @media (max-width: 768px) { .top-bar { padding: 1rem; } .main-container { padding: 1.5rem 1rem; } .subject-card { padding: 15px; } }
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="logo">Edu<span>Platform</span></div>
+        <div class="auth-status" id="authStatusText">লকড 🔒</div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="header-text">
+            <h1>একাদশ শ্রেণি - তৃতীয় সেমিস্টার</h1>
+            <p>সম্পূর্ণ অ্যাকাডেমিক মক টেস্ট ও প্র্যাকটিস হাব</p>
+        </div>
+
+        <div class="demo-section">
+            <h2>টেস্ট প্যানেলে স্বাগতম</h2>
+            <p>যেকোনো অধ্যায়ের ওপর ক্লিক করে আপনার নির্ধারিত ইউজারনেম এবং পাসওয়ার্ড দিয়ে লগইন করুন।</p>
+
+            <div>
+                <!-- Demo Button -->
+                <a href="demo_file.html" class="demo-btn">ফ্রি ডেমো টেস্ট দিন</a>
+            </div>
+        </div>
+
+        <!-- Subject Grid -->
+        <div class="subject-grid">
+
+            <!-- Biology -->
+            <div class="subject-card">
+                <div class="subject-header">
+                    <div class="subject-icon">🧬</div>
+                    <div class="subject-title">জীববিদ্যা (Biology)</div>
+                </div>
+                <div class="chapter-list">
+                    <div class="chapter-link" onclick="requireLogin('biology_sem3_ch1.html')">
+                        <span>অধ্যায় ১: সপুষ্পক উদ্ভিদের যৌন জনন</span>
+                        <span class="chapter-meta">১২ সেট</span>
+                    </div>
+                    <div class="chapter-link" onclick="requireLogin('biology_sem3_ch2.html')">
+                        <span>অধ্যায় ২: মানুষের জনন</span>
+                        <span class="chapter-meta">আপকামিং</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Physics -->
+            <div class="subject-card">
+                <div class="subject-header">
+                    <div class="subject-icon">🧲</div>
+                    <div class="subject-title">পদার্থবিদ্যা (Physics)</div>
+                </div>
+                <div class="chapter-list">
+                    <div class="chapter-link" onclick="requireLogin('physics_sem3_ch1.html')">
+                        <span>অধ্যায় ১: স্থির তড়িৎ</span>
+                        <span class="chapter-meta">৫ সেট</span>
+                    </div>
+                    <div class="chapter-link" onclick="requireLogin('physics_sem3_ch2.html')">
+                        <span>অধ্যায় ২: প্রবাহী তড়িৎ</span>
+                        <span class="chapter-meta">আপকামিং</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chemistry -->
+            <div class="subject-card">
+                <div class="subject-header">
+                    <div class="subject-icon">🧪</div>
+                    <div class="subject-title">রসায়ন (Chemistry)</div>
+                </div>
+                <div class="chapter-list">
+                    <div class="chapter-link" onclick="requireLogin('chem_sem3_ch1.html')">
+                        <span>অধ্যায় ১: কঠিন অবস্থা</span>
+                        <span class="chapter-meta">৬ সেট</span>
+                    </div>
+                    <div class="chapter-link" onclick="requireLogin('chem_sem3_ch2.html')">
+                        <span>অধ্যায় ২: দ্রবণ</span>
+                        <span class="chapter-meta">আপকামিং</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Math -->
+            <div class="subject-card">
+                <div class="subject-header">
+                    <div class="subject-icon">📐</div>
+                    <div class="subject-title">গণিত (Mathematics)</div>
+                </div>
+                <div class="chapter-list">
+                    <div class="chapter-link" onclick="requireLogin('math_sem3_ch1.html')">
+                        <span>অধ্যায় ১: সম্বন্ধ ও চিত্রণ</span>
+                        <span class="chapter-meta">৫ সেট</span>
+                    </div>
+                    <div class="chapter-link" onclick="requireLogin('math_sem3_ch2.html')">
+                        <span>অধ্যায় ২: ত্রিকোণমিতিক বিপরীত বৃত্তি</span>
+                        <span class="chapter-meta">আপকামিং</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bengali -->
+            <div class="subject-card">
+                <div class="subject-header">
+                    <div class="subject-icon">📖</div>
+                    <div class="subject-title">বাংলা (Bengali)</div>
+                </div>
+                <div class="chapter-list">
+                    <div class="chapter-link" onclick="requireLogin('bengali_sem3_ch1.html')">
+                        <span>গল্প ও প্রবন্ধ সেট</span>
+                        <span class="chapter-meta">৪ সেট</span>
+                    </div>
+                    <div class="chapter-link" onclick="requireLogin('bengali_sem3_ch2.html')">
+                        <span>কবিতা ও নাটক সেট</span>
+                        <span class="chapter-meta">আপকামিং</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- English -->
+            <div class="subject-card">
+                <div class="subject-header">
+                    <div class="subject-icon">📝</div>
+                    <div class="subject-title">ইংরেজি (English)</div>
+                </div>
+                <div class="chapter-list">
+                    <div class="chapter-link" onclick="requireLogin('english_sem3_ch1.html')">
+                        <span>Prose & Poetry</span>
+                        <span class="chapter-meta">৫ সেট</span>
+                    </div>
+                    <div class="chapter-link" onclick="requireLogin('english_sem3_grammar.html')">
+                        <span>Grammar & Textual</span>
+                        <span class="chapter-meta">আপকামিং</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Global Login Modal -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-modal">
+            <h2>লগইন করুন</h2>
+            <p>টেস্ট শুরু করতে আপনার ইউজারনেম ও পাসওয়ার্ড দিন</p>
+
+            <div class="input-group">
+                <label>ইউজারনেম</label>
+                <input type="text" id="usernameInput" placeholder="আপনার ইউজারনেম">
+            </div>
+            <div class="input-group">
+                <label>পাসওয়ার্ড</label>
+                <input type="password" id="passwordInput" placeholder="আপনার পাসওয়ার্ড">
+            </div>
+
+            <div class="error-msg" id="errorMsg">ইউজারনেম বা পাসওয়ার্ড ভুল! আবার চেষ্টা করুন।</div>
+
+            <button class="login-btn" onclick="verifyLogin()">লগইন</button>
+            <button class="cancel-btn" onclick="hideLogin()">বাতিল</button>
+
+            <!-- WhatsApp Support Box -->
+            <div class="wa-box">
+                <p>ইউজারনেম ও পাসওয়ার্ড পেতে যোগাযোগ করুন:</p>
+                <a href="https://wa.me/918710032880?text=স্যার,%20আমার%20একাদশ%20শ্রেণির%20তৃতীয়%20সেমিস্টারের%20মক%20টেস্টের%20ইউজারনেম%20ও%20পাসওয়ার্ড%20প্রয়োজন।" target="_blank" class="wa-btn">
+                    💬 WhatsApp-এ মেসেজ করুন
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        //  এখানে ইউজারনেম ও পাসওয়ার্ড কন্ট্রোল করুন
+        // ==========================================
+        const MASTER_USERNAME = "student11";  
+        const MASTER_PASSWORD = "password123";
+        // ==========================================
+
+        let pendingTargetUrl = "";
+
+        // Check login status on page load
+        window.onload = function() {
+            if(localStorage.getItem('sem3_auth') === 'success') {
+                document.getElementById('authStatusText').innerHTML = "আনলকড 🔓";
+            }
+        };
+
+        // Function called when a chapter is clicked
+        function requireLogin(targetUrl) {
+            if (localStorage.getItem('sem3_auth') === 'success') {
+                window.location.href = targetUrl;
+            } else {
+                pendingTargetUrl = targetUrl;
+                document.getElementById('loginOverlay').classList.add('active');
+            }
+        }
+
+        // Hide Login Modal
+        function hideLogin() {
+            document.getElementById('loginOverlay').classList.remove('active');
+            document.getElementById('errorMsg').style.display = 'none';
+        }
+
+        // Verify Credentials
+        function verifyLogin() {
+            const user = document.getElementById('usernameInput').value;
+            const pass = document.getElementById('passwordInput').value;
+
+            if (user === MASTER_USERNAME && pass === MASTER_PASSWORD) {
+                localStorage.setItem('sem3_auth', 'success');
+                document.getElementById('authStatusText').innerHTML = "আনলকড 🔓";
+
+                hideLogin();
+                if(pendingTargetUrl !== "") {
+                    window.location.href = pendingTargetUrl;
+                }
+            } else {
+                document.getElementById('errorMsg').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
+
