@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Demo Test - Biology</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #1a7a4a;
+            --accent: #f9a825;
+            --bg-main: #f4f8f5;
+            --bg-card: #ffffff;
+            --text-main: #1c2e24;
+            --text-meta: #5a7a66;
+            --border-color: #c5dccb;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Syne', sans-serif; background: var(--bg-main); color: var(--text-main); min-height: 100vh; }
+
+        /* Top Bar */
+        .top-bar { background: var(--primary); padding: 0.8rem 1.5rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .top-logo { font-size: 1.2rem; font-weight: 800; color: white; cursor: pointer; text-decoration: none;}
+        .top-logo span { color: var(--accent); }
+        .timer-box { background: rgba(255,255,255,0.2); padding: 0.3rem 0.8rem; border-radius: 6px; color: white; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 8px;}
+        .timer-box.danger { background: #dc3545; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        .main { max-width: 800px; margin: 2rem auto; padding: 0 1.5rem; }
+
+        /* Quiz Area */
+        .quiz-info { background: white; border-radius: 12px; padding: 1rem 1.2rem; margin-bottom: 1.2rem; border: 1px solid var(--border-color); display: flex; justify-content: space-between; flex-wrap: wrap; }
+        .info-item { font-family: 'Tiro Bangla', serif; font-size: 1rem; color: var(--text-meta); font-weight: 600; }
+        .info-item strong { color: var(--primary); }
+
+        .progress-wrap { background: var(--border-color); border-radius: 4px; height: 6px; margin-bottom: 1.2rem; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--primary); border-radius: 4px; transition: width 0.3s; width: 0%;}
+
+        .q-card { background: white; border-radius: 14px; padding: 1.5rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid var(--border-color);}
+        .q-num { font-size: 0.9rem; font-weight: 700; color: var(--primary); margin-bottom: 0.8rem; font-family: 'Tiro Bangla', serif;}
+        .q-text { font-family: 'Tiro Bangla', serif; font-size: 1.2rem; color: var(--text-main); font-weight: 700; line-height: 1.6; margin-bottom: 1.2rem; }
+
+        .opts { display: flex; flex-direction: column; gap: 0.8rem; }
+        .opt { display: flex; align-items: flex-start; gap: 12px; padding: 1rem; border: 1.5px solid var(--border-color); border-radius: 10px; background: transparent; cursor: pointer; text-align: left; transition: all 0.2s; width: 100%; }
+        .opt:hover:not(.disabled) { border-color: var(--primary); background: #f0faf4; }
+        .opt-circle { min-width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--border-color); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; color: var(--text-meta); flex-shrink: 0; }
+        .opt-text { font-family: 'Tiro Bangla', serif; font-size: 1.05rem; color: var(--text-main); line-height: 1.4; font-weight: 600; }
+
+        .opt.correct { border-color: var(--primary); background: #e8f7ef; }
+        .opt.correct .opt-circle { background: var(--primary); border-color: var(--primary); color: white; }
+        .opt.wrong { border-color: #dc3545; background: #fdf0f0; }
+        .opt.wrong .opt-circle { background: #dc3545; border-color: #dc3545; color: white; }
+        .opt.disabled { cursor: default; }
+
+        .explanation { background: #f0faf4; border-left: 4px solid var(--primary); border-radius: 0 8px 8px 0; padding: 1rem; margin-top: 1.5rem; display: none; }
+        .explanation.show { display: block; }
+        .explanation p { font-family: 'Tiro Bangla', serif; font-size: 1rem; color: #2c4035; line-height: 1.6; font-weight: bold;}
+
+        .nav-row { display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; }
+        .score-show { font-family: 'Tiro Bangla', serif; font-size: 1rem; color: var(--text-meta); font-weight: bold; }
+        .next-btn { background: var(--primary); color: white; border: none; padding: 0.8rem 1.8rem; border-radius: 8px; font-family: 'Tiro Bangla', serif; font-size: 1.05rem; font-weight: bold; cursor: pointer; transition: all 0.2s; }
+        .next-btn:hover:not(:disabled) { background: #13633a; }
+        .next-btn:disabled { background: var(--border-color); cursor: not-allowed; }
+
+        /* Result Area */
+        .result-wrap { background: white; border-radius: 14px; padding: 2rem; text-align: center; border: 1px solid var(--border-color); display: none; max-width: 600px; margin: 0 auto; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .result-wrap.show { display: block; }
+        .result-icon { font-size: 3.5rem; margin-bottom: 0.5rem; line-height: 1; }
+        .result-score { font-size: 3.5rem; font-weight: 800; color: var(--primary); line-height: 1; margin-bottom: 5px; }
+        .result-total { font-size: 1.1rem; color: var(--text-meta); margin-bottom: 0.5rem; font-family: 'Tiro Bangla', serif; font-weight: bold;}
+        .result-grade { font-size: 1.3rem; font-weight: 700; color: #e8730a; margin-bottom: 1.5rem; font-family: 'Tiro Bangla', serif; }
+
+        .result-bars { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+        .result-bar { background: #f0faf4; border-radius: 10px; padding: 1rem; text-align: center; border: 1px solid var(--border-color); }
+        .rb-num { font-size: 1.8rem; font-weight: 800; color: var(--text-main);}
+        .rb-label { font-family: 'Tiro Bangla', serif; font-size: 0.95rem; color: var(--text-meta); margin-top: 0.2rem; font-weight: bold;}
+
+        .result-actions { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+        .result-actions button, .result-actions a { width: 100%; padding: 14px; border-radius: 8px; font-family: 'Tiro Bangla', serif; font-size: 1.05rem; font-weight: 800; cursor: pointer; border: none; transition: 0.2s; text-decoration: none; display: block;}
+        .btn-retry { background: #17a2b8; color: white; }
+        .btn-retry:hover { background: #138496; }
+        .btn-home { background: transparent; color: var(--text-meta); border: 2px solid var(--border-color) !important; }
+        .btn-home:hover { background: #f0faf4; }
+
+    </style>
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <a href="index_3rd_sem.html" class="top-logo">Edu<span>Platform</span></a>
+        <div class="timer-box" id="timerBox">
+            ⏱️ <span id="timeDisplay">10:00</span>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main">
+
+        <!-- Quiz Section -->
+        <div id="quizSection">
+            <div class="quiz-info">
+                <div class="info-item">বিষয়: <strong>জীববিদ্যা (ফ্রি ডেমো)</strong></div>
+                <div class="info-item">অধ্যায়: <strong>সপুষ্পক উদ্ভিদের যৌন জনন</strong></div>
+            </div>
+
+            <div class="progress-wrap">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div class="q-card">
+                <div class="q-num" id="qNum">প্রশ্ন ১ / ১৫</div>
+                <div class="q-text" id="qText">প্রশ্ন লোড হচ্ছে...</div>
+
+                <div class="opts" id="optionsBox">
+                    <!-- Options injected via JS -->
+                </div>
+
+                <div class="explanation" id="explanationBox">
+                    <p id="expText"></p>
+                </div>
+
+                <div class="nav-row">
+                    <div class="score-show">বর্তমান স্কোর: <span id="currentScore">০</span></div>
+                    <button class="next-btn" id="nextBtn" disabled onclick="nextQuestion()">পরবর্তী প্রশ্ন ➔</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Section -->
+        <div class="result-wrap" id="resultSection">
+            <div class="result-icon" id="rIcon">🏆</div>
+            <div class="result-score" id="rScore">0</div>
+            <div class="result-total">১৫ এর মধ্যে</div>
+            <div class="result-grade" id="rGrade">অসাধারণ!</div>
+
+            <div class="result-bars">
+                <div class="result-bar">
+                    <div class="rb-num" id="rCorrect" style="color: #1a7a4a;">0</div>
+                    <div class="rb-label">সঠিক উত্তর</div>
+                </div>
+                <div class="result-bar">
+                    <div class="rb-num" id="rWrong" style="color: #dc3545;">0</div>
+                    <div class="rb-label">ভুল উত্তর</div>
+                </div>
+            </div>
+
+            <div class="result-actions">
+                <button class="btn-retry" onclick="location.reload()">🔄 আবার টেস্ট দিন</button>
+                <a href="index_3rd_sem.html" class="btn-home">🏠 ড্যাশবোর্ডে ফিরে যান</a>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Quiz Data - 15 Questions from Biology Set 1
+        const quizData = [
+            {
+                q: "১. একটি সম্পূর্ণ বা আদর্শ ফুলে কয়টি স্তবক থাকে?",
+                opts: ["২টি", "৩টি", "৪টি", "৫টি"],
+                ans: 2,
+                exp: "ব্যাখ্যা: একটি সম্পূর্ণ ফুলে পুষ্পাক্ষের ওপর মোট চারটি স্তবক— বৃতি, দলমণ্ডল, পুংস্তবক এবং স্ত্রীস্তবক পরপর সজ্জিত থাকে।"
+            },
+            {
+                q: "২. জবা ফুলের গর্ভপত্রগুলি পরস্পরের সাথে যুক্ত থাকে। এই ধরনের গর্ভকেশরকে কী বলে?",
+                opts: ["অ্যাপোকার্পাস", "সিনকার্পাস", "ডাইডেলফাস", "পলিডেলফাস"],
+                ans: 1,
+                exp: "ব্যাখ্যা: ফুলের গর্ভপত্রগুলি যখন পরস্পরের সঙ্গে যুক্ত বা সংলগ্ন অবস্থায় থাকে তখন তাকে সিনকার্পাস গর্ভকেশর বলে, যেমন— জবা ফুল।"
+            },
+            {
+                q: "৩. পরাগধানীর প্রাচীরের একেবারে ভেতরের স্তরটির নাম কী যা পুষ্টি প্রদানে সাহায্য করে?",
+                opts: ["এপিডারমিস", "এন্ডোথেশিয়াম", "মধ্যস্তর", "ট্যাপেটাম"],
+                ans: 3,
+                exp: "ব্যাখ্যা: পরাগথলির প্রাচীরের একেবারে ভেতরের একস্তরী আবরণকে ট্যাপেটাম বলে। এর প্রধান কাজ হলো বর্ধনশীল অপরিণত পরাগরেণু ও রেণু মাতৃকোশগুলিকে পুষ্টির জোগান দেওয়া।"
+            },
+            {
+                q: "৪. পরাগরেণুর বহিঃপ্রাচীর (Exine) কোন অত্যন্ত কঠিন রাসায়নিক পদার্থ দিয়ে গঠিত?",
+                opts: ["পেকটিন", "স্পোরোপোলেনিন", "সেলুলোজ", "ক্যালোজ"],
+                ans: 1,
+                exp: "ব্যাখ্যা: পরাগরেণুর বহিঃপ্রাচীর স্পোরোপোলেনিন নামক একপ্রকার ফ্যাটজাতীয় কঠিন পলিমার দিয়ে গঠিত যা পরাগরেণুকে চরম প্রতিকূল পরিবেশ ও রাসায়নিকের হাত থেকে রক্ষা করে।"
+            },
+            {
+                q: "৫. একটি মাইক্রোস্পোর মাতৃকোশ (PMC) মিয়োসিস প্রক্রিয়ায় বিভাজিত হয়ে কয়টি পরাগরেণু উৎপন্ন করে?",
+                opts: ["২টি", "৪টি", "৮টি", "১৬টি"],
+                ans: 1,
+                exp: "ব্যাখ্যা: ডিপ্লয়েড রেণু মাতৃকোশ মিয়োসিস বিভাজনের মাধ্যমে চারটি হ্যাপ্লয়েড পরাগরেণু উৎপন্ন করে, যা একসাথে একটি গুচ্ছ বা রেণুচতুষ্টয় (Tetrad) গঠন করে।"
+            },
+            {
+                q: "৬. মটর বা অপরাজিতা ফুলে পুংদণ্ডগুলি দুটি গুচ্ছে অবস্থান করে। এই অবস্থাকে কী বলে?",
+                opts: ["মোনোডেলফাস", "পলিডেলফাস", "ডাইডেলফাস", "সাইন্যানড্রাস"],
+                ans: 2,
+                exp: "ব্যাখ্যা: পুংকেশরের পুংদণ্ডগুলি যখন দুটি গুচ্ছে বিভক্ত হয়ে অবস্থান করে, তখন তাকে দ্বিগুণ বা ডাইডেলফাস পুংকেশর বলে।"
+            },
+            {
+                q: "৭. পতঙ্গপরাগী ফুলের পরাগরেণুর বাইরের দিকে থাকা হলুদ, চটচটে ও তৈলাক্ত আস্তরণকে কী বলে?",
+                opts: ["জোনা পেলুসিডা", "পোলেনকিট", "স্পোরোডার্ম", "ট্যাপেটাম"],
+                ans: 1,
+                exp: "ব্যাখ্যা: পতঙ্গপরাগী ফুলের পরাগরেণুকে ঘিরে থাকা লিপিড ও ক্যারোটিনয়েড দিয়ে গঠিত চটচটে আবরণকে পোলেনকিট বলে, যা পতঙ্গের গায়ে রেণু আটকে পরাগযোগে সাহায্য করে।"
+            },
+            {
+                q: "৮. পরাগধানীর দুটি খণ্ড যে অংশের মাধ্যমে যুক্ত থাকে, তাকে কী বলে?",
+                opts: ["পুংদণ্ড", "পুষ্পাক্ষ", "যোজক (Connective)", "স্টোমিয়াম"],
+                ans: 2,
+                exp: "ব্যাখ্যা: পরাগধানীর দুটি খণ্ড যে টিস্যু বা খাঁজের মতো অংশের দ্বারা পরস্পর সংযুক্ত থাকে, তাকে যোজক বা কানেকটিভ বলে।"
+            },
+            {
+                q: "৯. ডাইথিকাস (Dithecous) বা দ্বিখণ্ডিত পরাগধানীতে মোট কয়টি পরাগথলি থাকে?",
+                opts: ["২টি", "৩টি", "৪টি", "৮টি"],
+                ans: 2,
+                exp: "ব্যাখ্যা: ডাইথিকাস পরাগধানীর প্রতিটি খণ্ডে দুটি করে মোট চারটি পরাগথলি বা মাইক্রোস্পোরানজিয়াম থাকে, তাই একে টেট্রাস্পোরানজিয়েট পরাগধানী বলা হয়।"
+            },
+            {
+                q: "১০. উদ্ভিদবিজ্ঞানের যে শাখায় পরাগরেণুর গঠন, আকৃতি ও উৎপাদন নিয়ে আলোচনা করা হয়, তাকে কী বলে?",
+                opts: ["পোমোলজি", "প্যালিনোলজি", "অ্যান্থোলজি", "এমব্রায়োলজি"],
+                ans: 1,
+                exp: "ব্যাখ্যা: পরাগরেণু ও রেণুর উৎপাদন, গঠন ও অর্থনৈতিক গুরুত্ব সম্পর্কে জীববিজ্ঞানের যে শাখায় আলোচনা করা হয় তাকে প্যালিনোলজি (Palynology) বলে।"
+            },
+            {
+                q: "১১. লজ্জাবতী (Mimosa pudica) গাছে ৪টি পরাগরেণু একসাথে যুক্ত থাকে, একে কী বলে?",
+                opts: ["পলিনিয়াম", "পলিস্পোরি", "যৌগিক পরাগরেণু", "পোলেনকিট"],
+                ans: 2,
+                exp: "ব্যাখ্যা: পরাগ মাতৃকোশ থেকে উৎপন্ন চারটি পরাগরেণু যখন পরস্পর থেকে আলাদা না হয়ে সমবেত অবস্থায় থেকে যায়, তখন তাকে যৌগিক পরাগরেণু বলে।"
+            },
+            {
+                q: "১২. পরাগথলির কোন্ কোষটি স্পোরোপোলেনিন ক্ষরণ করে?",
+                opts: ["এপিডারমিস", "এন্ডোথেশিয়াম", "মধ্যস্তর", "ট্যাপেটামের ক্ষরণকারী কোষ"],
+                ans: 3,
+                exp: "ব্যাখ্যা: ট্যাপেটাম স্তরের ক্ষরণকারী কোষগুলি স্পোরোপোলেনিন নামক রাসায়নিক ক্ষরণ করে যা পরাগরেণুর শক্ত বহিঃপ্রাচীর তৈরি করে।"
+            },
+            {
+                q: "১৩. নিম্নলিখিত কোন্ ফুলে ট্রান্সলেটর (Translator) দেখা যায়?",
+                opts: ["জবা", "আকন্দ", "সরিষা", "সূর্যমুখী"],
+                ans: 1,
+                exp: "ব্যাখ্যা: আকন্দ ফুলে পরাগরেণুগুলি একত্রিত হয়ে পলিনিয়াম গঠন করে, যা ট্রান্সলেটর নামক একটি গঠনের মাধ্যমে পতঙ্গের পায়ে আটকে স্থানান্তরিত হয়।"
+            },
+            {
+                q: "১৪. পরাগরেণুর অন্তঃপ্রাচীর (Intine) কী দিয়ে গঠিত?",
+                opts: ["পেকটিন ও সেলুলোজ", "ক্যালোজ", "সুবেরিন", "কাইটিন"],
+                ans: 0,
+                exp: "ব্যাখ্যা: পরাগরেণুর পাতলা ও মসৃণ অন্তঃপ্রাচীর বা ইনটাইন সাধারণত পেকটিন এবং সেলুলোজ (পেক্টো-সেলুলোজিক) দিয়ে গঠিত হয়।"
+            },
+            {
+                q: "১৫. সরিষা ফুলে ৬টি পুংকেশরের মধ্যে ৪টি বড়ো এবং ২টি ছোটো হয়। এই পুংকেশরকে কী বলে?",
+                opts: ["ডিডিনেমাস", "টেট্রাডিনেমাস", "সাইন্যানড্রাস", "সিনজেনেশিয়াস"],
+                ans: 1,
+                exp: "ব্যাখ্যা: যখন ৬টি পুংকেশরের মধ্যে ৪টি দীর্ঘ এবং ২টি খর্বাকৃতির হয়, তখন সেই অবস্থাকে দীর্ঘচতুষ্টয়ী বা টেট্রাডিনেমাস পুংকেশর বলে।"
+            }
+        ];
+
+        let currentQIndex = 0;
+        let score = 0;
+        let wrongCount = 0;
+        let isAnswered = false;
+
+        // Timer Variables (10 Minutes)
+        let totalTime = 10 * 60;
+        let timerInterval;
+
+        window.onload = function() {
+            startTimer();
+            loadQuestion();
+        };
+
+        // Number conversion to Bengali
+        const enToBnNum = { '0':'০', '1':'১', '2':'২', '3':'৩', '4':'৪', '5':'৫', '6':'৬', '7':'৭', '8':'৮', '9':'৯' };
+        function toBnNum(num) {
+            return num.toString().split('').map(c => enToBnNum[c] || c).join('');
+        }
+
+        // Timer Logic
+        function startTimer() {
+            const timeDisplay = document.getElementById('timeDisplay');
+            const timerBox = document.getElementById('timerBox');
+
+            timerInterval = setInterval(() => {
+                totalTime--;
+                let m = Math.floor(totalTime / 60);
+                let s = totalTime % 60;
+
+                m = m < 10 ? '0' + m : m;
+                s = s < 10 ? '0' + s : s;
+
+                timeDisplay.innerHTML = `${toBnNum(m)}:${toBnNum(s)}`;
+
+                if (totalTime <= 60) {
+                    timerBox.classList.add('danger');
+                }
+
+                if (totalTime <= 0) {
+                    clearInterval(timerInterval);
+                    showResult();
+                }
+            }, 1000);
+        }
+
+        // Load Question
+        function loadQuestion() {
+            isAnswered = false;
+            document.getElementById('nextBtn').disabled = true;
+            document.getElementById('explanationBox').classList.remove('show');
+
+            const q = quizData[currentQIndex];
+            document.getElementById('qNum').innerText = `প্রশ্ন ${toBnNum(currentQIndex + 1)} / ${toBnNum(quizData.length)}`;
+            document.getElementById('qText').innerText = q.q;
+
+            let progress = ((currentQIndex) / quizData.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+
+            const optsBox = document.getElementById('optionsBox');
+            optsBox.innerHTML = '';
+
+            const labels = ['A', 'B', 'C', 'D'];
+
+            q.opts.forEach((optText, index) => {
+                const optDiv = document.createElement('div');
+                optDiv.className = 'opt';
+                optDiv.onclick = () => selectOption(index, optDiv);
+
+                optDiv.innerHTML = `
+                    <div class="opt-circle">${labels[index]}</div>
+                    <div class="opt-text">${optText}</div>
+                `;
+                optsBox.appendChild(optDiv);
+            });
+        }
+
+        // Handle Option Selection
+        function selectOption(selectedIndex, optDiv) {
+            if (isAnswered) return;
+            isAnswered = true;
+
+            const q = quizData[currentQIndex];
+            const allOpts = document.querySelectorAll('.opt');
+
+            // Disable all options
+            allOpts.forEach(opt => opt.classList.add('disabled'));
+
+            if (selectedIndex === q.ans) {
+                optDiv.classList.add('correct');
+                score++;
+                document.getElementById('currentScore').innerText = toBnNum(score);
+            } else {
+                optDiv.classList.add('wrong');
+                wrongCount++;
+                allOpts[q.ans].classList.add('correct'); // Highlight correct answer
+            }
+
+            // Show Explanation
+            document.getElementById('expText').innerText = q.exp;
+            document.getElementById('explanationBox').classList.add('show');
+
+            // Enable Next Button
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        // Next Question or Result
+        function nextQuestion() {
+            if (currentQIndex < quizData.length - 1) {
+                currentQIndex++;
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        // Show Final Result
+        function showResult() {
+            clearInterval(timerInterval);
+            document.getElementById('quizSection').style.display = 'none';
+            document.getElementById('resultSection').classList.add('show');
+
+            document.getElementById('rScore').innerText = toBnNum(score);
+            document.getElementById('rCorrect').innerText = toBnNum(score);
+            document.getElementById('rWrong').innerText = toBnNum(wrongCount);
+
+            let grade = "";
+            let icon = "";
+            let percentage = (score / quizData.length) * 100;
+
+            if(percentage >= 80) { grade = "অসাধারণ প্রস্তুতি!"; icon = "🏆"; }
+            else if(percentage >= 50) { grade = "খুব ভালো, আরও উন্নতি সম্ভব!"; icon = "👍"; }
+            else { grade = "আরও ভালো করে পড়তে হবে!"; icon = "📚"; }
+
+            document.getElementById('rGrade').innerText = grade;
+            document.getElementById('rIcon').innerText = icon;
+        }
+    </script>
+</body>
+</html>
+
