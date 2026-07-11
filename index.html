@@ -23,7 +23,7 @@
 
         /* Top Bar */
         .top-bar { background: var(--primary); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; color: white; box-shadow: 0 4px 15px rgba(26,122,74,0.2); position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 1px; }
+        .logo { font-size: 1.6rem; font-weight: 800; letter-spacing: 1px; font-family: 'Syne', sans-serif; }
         .logo span { color: var(--accent); }
         .auth-status { font-family: 'Tiro Bangla', serif; font-size: 1rem; font-weight: bold; background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px;}
 
@@ -38,11 +38,9 @@
         .demo-section h2 { font-family: 'Tiro Bangla', serif; color: white; font-size: 1.8rem; margin-bottom: 10px; }
         .demo-section p { font-family: 'Tiro Bangla', serif; color: rgba(255,255,255,0.9); font-size: 1.1rem; font-weight: bold; margin-bottom: 20px; }
 
-        /* Demo Button */
         .demo-btn { background: white; color: #f57f17; padding: 12px 30px; border-radius: 30px; font-weight: bold; font-size: 1.2rem; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: 0.3s; font-family: 'Tiro Bangla', serif; margin-bottom: 15px; margin-right: 10px;}
         .demo-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
 
-        /* WhatsApp Button */
         .wa-btn { background: #25D366; color: white; padding: 12px 20px; border-radius: 8px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Tiro Bangla', serif; font-size: 1.05rem; transition: 0.2s; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2); cursor: pointer;}
         .wa-btn:hover { background: #128C7E; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3); }
 
@@ -76,7 +74,6 @@
         .cancel-btn { width: 100%; background: transparent; color: var(--text-meta); border: 1.5px solid var(--border-color); padding: 10px; border-radius: 8px; font-family: 'Tiro Bangla', serif; font-size: 1rem; font-weight: 700; cursor: pointer; }
         .error-msg { color: #dc3545; font-size: 0.85rem; font-weight: 700; margin-top: 10px; font-family: 'Tiro Bangla', serif; display: none; text-align: center; margin-bottom:10px; }
 
-        /* WhatsApp Box in Modal */
         .wa-box { margin-top: 20px; border-top: 2px dashed var(--border-color); padding-top: 15px; text-align: center; }
         .wa-box p { font-size: 0.85rem; color: var(--text-main); font-weight: bold; margin-bottom: 10px; }
 
@@ -87,23 +84,21 @@
 
     <!-- Top Bar -->
     <div class="top-bar">
-        <div class="logo">Edu<span>Platform</span></div>
+        <div class="logo">Test<span>Bazar</span></div>
         <div class="auth-status" id="authStatusText">লকড 🔒</div>
     </div>
 
     <!-- Main Container -->
     <div class="main-container">
         <div class="header-text">
-            <h1>একাদশ শ্রেণি - তৃতীয় সেমিস্টার</h1>
+            <h1>দ্বাদশ শ্রেণি - তৃতীয় সেমিস্টার</h1>
             <p>সম্পূর্ণ অ্যাকাডেমিক মক টেস্ট ও প্র্যাকটিস হাব</p>
         </div>
 
         <div class="demo-section">
             <h2>টেস্ট প্যানেলে স্বাগতম</h2>
             <p>যেকোনো অধ্যায়ের ওপর ক্লিক করে আপনার নির্ধারিত ইউজারনেম এবং পাসওয়ার্ড দিয়ে লগইন করুন।</p>
-
             <div>
-                <!-- Demo Button -->
                 <a href="demo_file.html" class="demo-btn">ফ্রি ডেমো টেস্ট দিন</a>
             </div>
         </div>
@@ -242,7 +237,6 @@
             <button class="login-btn" onclick="verifyLogin()">লগইন</button>
             <button class="cancel-btn" onclick="hideLogin()">বাতিল</button>
 
-            <!-- WhatsApp Support Box -->
             <div class="wa-box">
                 <p>ইউজারনেম ও পাসওয়ার্ড পেতে যোগাযোগ করুন:</p>
                 <a href="https://wa.me/918710032880?text=স্যার,%20আমার%20একাদশ%20শ্রেণির%20তৃতীয়%20সেমিস্টারের%20মক%20টেস্টের%20ইউজারনেম%20ও%20পাসওয়ার্ড%20প্রয়োজন।" target="_blank" class="wa-btn">
@@ -253,23 +247,27 @@
     </div>
 
     <script>
-        // ==========================================
-        //  এখানে ইউজারনেম ও পাসওয়ার্ড কন্ট্রোল করুন
-        // ==========================================
-        const MASTER_USERNAME = "student11";  
-        const MASTER_PASSWORD = "password123";
-        // ==========================================
+        // =======================================================
+        //  এখানে আপনি যত খুশি ইউজারনেম ও পাসওয়ার্ড যোগ করতে পারবেন
+        //  নিয়ম: "ইউজারনেম": "পাসওয়ার্ড" (শেষেরটিতে কমা দেওয়ার দরকার নেই)
+        // =======================================================
+        const validUsers = {
+            "student11": "password123",
+            "jaba": "12345",         // যেমন jaba-র জন্য পাসওয়ার্ড
+            "rahul": "rahul2024",
+            "test_user": "demo123"
+        };
+        // =======================================================
 
         let pendingTargetUrl = "";
 
-        // Check login status on page load
+        // Check login status
         window.onload = function() {
             if(localStorage.getItem('sem3_auth') === 'success') {
                 document.getElementById('authStatusText').innerHTML = "আনলকড 🔓";
             }
         };
 
-        // Function called when a chapter is clicked
         function requireLogin(targetUrl) {
             if (localStorage.getItem('sem3_auth') === 'success') {
                 window.location.href = targetUrl;
@@ -279,19 +277,22 @@
             }
         }
 
-        // Hide Login Modal
         function hideLogin() {
             document.getElementById('loginOverlay').classList.remove('active');
             document.getElementById('errorMsg').style.display = 'none';
         }
 
-        // Verify Credentials
         function verifyLogin() {
-            const user = document.getElementById('usernameInput').value;
-            const pass = document.getElementById('passwordInput').value;
+            const user = document.getElementById('usernameInput').value.trim();
+            const pass = document.getElementById('passwordInput').value.trim();
 
-            if (user === MASTER_USERNAME && pass === MASTER_PASSWORD) {
+            // এখানে চেক করা হচ্ছে ইউজারের নাম ডিকশনারিতে আছে কিনা এবং পাসওয়ার্ড মিলছে কিনা
+            if (validUsers.hasOwnProperty(user) && validUsers[user] === pass) {
+                // Login Success
                 localStorage.setItem('sem3_auth', 'success');
+                // ইউজারের নাম সেভ করে রাখা হলো টেস্ট লিমিট গোনার জন্য
+                localStorage.setItem('sem3_user', user);
+
                 document.getElementById('authStatusText').innerHTML = "আনলকড 🔓";
 
                 hideLogin();
