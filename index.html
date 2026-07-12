@@ -1,309 +1,210 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class 11 - 3rd Semester Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Bazar - 3rd Semester Science Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Tiro+Bangla:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ================= COLOR SCHEME & VARIABLES ================= */
+:root {
+  --primary: #1a7a4a;
+  --primary-hover: #2aad68;
+  --accent: #f9a825;
+  --bg-main: #f0faf4;
+  --bg-card: #ffffff;
+  --text-main: #1c2e24;
+  --text-meta: #5a7a66;
+  --border-color: #c5dccb;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Syne', sans-serif; background: var(--bg-main); color: var(--text-main); min-height: 100vh; }
+.en-font { font-family: 'Syne', sans-serif; }
+a { text-decoration: none; }
 
-    <style>
-        :root {
-            --primary: #1a7a4a;
-            --accent: #f9a825;
-            --bg-main: #f4f8f5;
-            --bg-card: #ffffff;
-            --text-main: #1c2e24;
-            --text-meta: #5a7a66;
-            --border-color: #c5dccb;
-        }
+/* Top Bar */
+.top-bar { background: var(--primary); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; color: white; box-shadow: 0 4px 15px rgba(26,122,74,0.2); position: sticky; top: 0; z-index: 100; }
+.logo { font-size: 1.5rem; font-weight: 800; letter-spacing: 1px; }
+.logo span { color: var(--accent); }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Syne', sans-serif; background: var(--bg-main); color: var(--text-main); min-height: 100vh; }
-        a { text-decoration: none; }
+/* Main Container */
+.main-container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+.header-text { text-align: center; margin-bottom: 2rem; }
+.header-text h1 { font-family: 'Tiro Bangla', serif; font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem; line-height: 1.4; }
+.header-text p { font-family: 'Tiro Bangla', serif; font-size: 1.05rem; color: var(--text-meta); font-weight: bold; }
 
-        /* Top Bar */
-        .top-bar { background: var(--primary); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; color: white; box-shadow: 0 4px 15px rgba(26,122,74,0.2); position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 1.6rem; font-weight: 800; letter-spacing: 1px; font-family: 'Syne', sans-serif; }
-        .logo span { color: var(--accent); }
-        .auth-status { font-family: 'Tiro Bangla', serif; font-size: 1rem; font-weight: bold; background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px;}
+/* Demo Section */
+.demo-section { background: linear-gradient(135deg, #f9a825, #f57f17); padding: 25px; border-radius: 16px; text-align: center; margin-bottom: 30px; box-shadow: 0 8px 20px rgba(249, 168, 37, 0.3); }
+.demo-section h2 { font-family: 'Tiro Bangla', serif; color: white; font-size: 1.8rem; margin-bottom: 10px; }
+.demo-section p { font-family: 'Tiro Bangla', serif; color: rgba(255,255,255,0.9); font-size: 1.1rem; margin-bottom: 20px; font-weight: bold; }
+.demo-btn { background: white; color: #f57f17; padding: 12px 30px; border-radius: 30px; font-weight: bold; font-size: 1.2rem; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: 0.3s; font-family: 'Tiro Bangla', serif; }
+.demo-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
+.wa-btn { background: #25D366; color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold; display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; font-family: 'Syne', sans-serif; transition: 0.2s;}
+.wa-btn:hover { background: #128C7E; transform: translateY(-2px);}
 
-        /* Main Container */
-        .main-container { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
-        .header-text { text-align: center; margin-bottom: 2rem; }
-        .header-text h1 { font-family: 'Tiro Bangla', serif; font-size: 2rem; color: var(--primary); margin-bottom: 0.5rem; line-height: 1.4; }
-        .header-text p { font-family: 'Tiro Bangla', serif; font-size: 1.05rem; color: var(--text-meta); font-weight: bold; }
+/* Subject Grid */
+.subject-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
+.subject-card { background: var(--bg-card); border-radius: 16px; padding: 25px; border: 2px solid var(--border-color); box-shadow: 0 5px 15px rgba(0,0,0,0.03); transition: 0.3s; }
+.subject-card:hover { border-color: var(--primary); box-shadow: 0 10px 30px rgba(26,122,74,0.1); }
+.subject-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px dashed var(--border-color); }
+.subject-icon { font-size: 2.2rem; background: var(--bg-main); width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid var(--border-color); }
+.subject-title { font-size: 1.5rem; font-weight: 700; color: var(--primary); font-family: 'Tiro Bangla', serif;}
 
-        /* Demo Section */
-        .demo-section { background: linear-gradient(135deg, #f9a825, #f57f17); padding: 25px; border-radius: 16px; text-align: center; margin-bottom: 30px; box-shadow: 0 8px 20px rgba(249, 168, 37, 0.3); }
-        .demo-section h2 { font-family: 'Tiro Bangla', serif; color: white; font-size: 1.8rem; margin-bottom: 10px; }
-        .demo-section p { font-family: 'Tiro Bangla', serif; color: rgba(255,255,255,0.9); font-size: 1.1rem; font-weight: bold; margin-bottom: 20px; }
+/* Chapter List */
+.chapter-list { display: flex; flex-direction: column; gap: 10px; }
+.chapter-link { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: var(--bg-main); border-radius: 10px; color: var(--text-main); font-weight: bold; font-size: 1.05rem; transition: 0.2s; border: 1px solid transparent; font-family: 'Tiro Bangla', serif;}
+.chapter-link:hover { background: var(--bg-card); border-color: var(--primary); color: var(--primary); padding-left: 20px; }
+.chapter-meta { font-size: 0.85rem; color: var(--text-meta); background: rgba(0,0,0,0.05); padding: 3px 8px; border-radius: 6px; font-family: 'Syne', sans-serif;}
 
-        .demo-btn { background: white; color: #f57f17; padding: 12px 30px; border-radius: 30px; font-weight: bold; font-size: 1.2rem; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: 0.3s; font-family: 'Tiro Bangla', serif; margin-bottom: 15px; margin-right: 10px;}
-        .demo-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
-
-        .wa-btn { background: #25D366; color: white; padding: 12px 20px; border-radius: 8px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: 'Tiro Bangla', serif; font-size: 1.05rem; transition: 0.2s; box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2); cursor: pointer;}
-        .wa-btn:hover { background: #128C7E; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(37, 211, 102, 0.3); }
-
-        /* Subject Grid */
-        .subject-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
-        .subject-card { background: var(--bg-card); border-radius: 16px; padding: 25px; border: 2px solid var(--border-color); box-shadow: 0 5px 15px rgba(0,0,0,0.03); transition: 0.3s; }
-        .subject-card:hover { border-color: var(--primary); box-shadow: 0 10px 30px rgba(26,122,74,0.1); }
-        .subject-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px dashed var(--border-color); }
-        .subject-icon { font-size: 2.2rem; background: var(--bg-main); width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; border-radius: 12px; border: 1px solid var(--border-color); }
-        .subject-title { font-size: 1.5rem; font-weight: 700; color: var(--primary); font-family: 'Tiro Bangla', serif;}
-
-        /* Chapter List */
-        .chapter-list { display: flex; flex-direction: column; gap: 10px; }
-        .chapter-link { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: var(--bg-main); border-radius: 10px; color: var(--text-main); font-weight: bold; font-size: 1.05rem; transition: 0.2s; border: 1px solid transparent; font-family: 'Tiro Bangla', serif; cursor: pointer; }
-        .chapter-link:hover { background: var(--bg-card); border-color: var(--primary); color: var(--primary); padding-left: 20px; }
-        .chapter-meta { font-size: 0.85rem; color: var(--text-meta); background: rgba(0,0,0,0.05); padding: 3px 8px; border-radius: 6px; font-family: 'Syne', sans-serif;}
-
-        /* LOGIN MODAL */
-        .login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px); }
-        .login-overlay.active { display: flex; }
-        .login-modal { background: white; padding: 2rem; border-radius: 16px; width: 90%; max-width: 380px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); }
-        .login-modal h2 { font-family: 'Tiro Bangla', serif; color: var(--primary); font-size: 1.4rem; margin-bottom: 0.5rem; text-align: center; }
-        .login-modal p { font-family: 'Tiro Bangla', serif; color: var(--text-meta); font-size: 0.9rem; margin-bottom: 1.5rem; text-align: center; }
-
-        .input-group { margin-bottom: 1.2rem; }
-        .input-group label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--text-main); margin-bottom: 5px; font-family: 'Tiro Bangla', serif; }
-        .input-group input { width: 100%; padding: 12px; border: 1.5px solid var(--border-color); border-radius: 8px; font-family: 'Syne', sans-serif; font-size: 0.95rem; outline: none; transition: 0.2s; }
-        .input-group input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(26,122,74,0.1); }
-
-        .login-btn { width: 100%; background: var(--primary); color: white; border: none; padding: 12px; border-radius: 8px; font-family: 'Tiro Bangla', serif; font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: 0.2s; margin-bottom: 8px; }
-        .cancel-btn { width: 100%; background: transparent; color: var(--text-meta); border: 1.5px solid var(--border-color); padding: 10px; border-radius: 8px; font-family: 'Tiro Bangla', serif; font-size: 1rem; font-weight: 700; cursor: pointer; }
-        .error-msg { color: #dc3545; font-size: 0.85rem; font-weight: 700; margin-top: 10px; font-family: 'Tiro Bangla', serif; display: none; text-align: center; margin-bottom:10px; }
-
-        .wa-box { margin-top: 20px; border-top: 2px dashed var(--border-color); padding-top: 15px; text-align: center; }
-        .wa-box p { font-size: 0.85rem; color: var(--text-main); font-weight: bold; margin-bottom: 10px; }
-
-        @media (max-width: 768px) { .top-bar { padding: 1rem; } .main-container { padding: 1.5rem 1rem; } .subject-card { padding: 15px; } }
-    </style>
+@media (max-width: 768px) {
+  .top-bar { padding: 1rem; }
+  .main-container { padding: 1.5rem 1rem; }
+  .subject-card { padding: 15px; }
+}
+</style>
 </head>
 <body>
 
-    <!-- Top Bar -->
-    <div class="top-bar">
-        <div class="logo">Test<span>Bazar</span></div>
-        <div class="auth-status" id="authStatusText">লকড 🔒</div>
+<!-- TOP BAR -->
+<header class="top-bar">
+  <div class="logo en-font">Test<span>Bazar</span></div>
+  <div class="en-font" style="font-weight: bold;">3rd Semester (Science)</div>
+</header>
+
+<!-- MAIN DASHBOARD -->
+<div class="main-container">
+
+  <div class="header-text">
+    <h1>৩য় সেমিস্টার (Science) মক টেস্ট ড্যাশবোর্ড</h1>
+    <p>আপনার বিষয়ের নির্দিষ্ট অধ্যায় নির্বাচন করে টেস্ট দেওয়া শুরু করুন</p>
+  </div>
+
+  <!-- FREE DEMO / WHATSAPP SECTION -->
+  <div class="demo-section">
+    <h2>🆓 ফ্রি ডেমো টেস্ট (সবার জন্য)</h2>
+    <p>Science বিভাগের ডেমো টেস্টগুলি দিতে নিচের বাটনে ক্লিক করুন। কোনো পাসওয়ার্ড লাগবে না!</p>
+
+    <a href="Demo_Test_Science.html" class="demo-btn">ডেমো টেস্ট শুরু করুন</a>
+
+    <div style="margin-top: 25px; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 15px;">
+        <h3 style="color: white; margin-bottom: 5px; font-size: 1.2rem; font-family: 'Tiro Bangla', serif;">ইউজারনেম ও পাসওয়ার্ড প্রয়োজন?</h3>
+        <p style="color: rgba(255,255,255,0.9); font-size: 0.95rem; margin-bottom: 0;">মূল টেস্টগুলো দেওয়ার জন্য আইডি না থাকলে নিচে ক্লিক করে WhatsApp-এ মেসেজ করুন:</p>
+        <a href="https://wa.me/918710032880?text=Hello%20Test%20Bazar,%20I%20need%20a%20username%20and%20password." target="_blank" class="wa-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"><path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0.068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.921l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.865-.583-.43-1.022-1.006-1.141-1.144-.119-.137-.013-.21.085-.308.088-.089.197-.23.296-.346.099-.114.133-.197.197-.326.065-.133.033-.248-.016-.346-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/></svg>
+          WhatsApp: 8710032880
+        </a>
+    </div>
+  </div>
+
+  <div class="subject-grid">
+
+    <!-- PHYSICS (পদার্থবিদ্যা) -->
+    <div class="subject-card">
+      <div class="subject-header">
+        <div class="subject-icon">🔭</div>
+        <div class="subject-title">পদার্থবিদ্যা (Physics)</div>
+      </div>
+      <div class="chapter-list">
+        <a href="#" class="chapter-link"><span>Unit 1: প্রথম অধ্যায়</span><span class="chapter-meta">10 Sets</span></a>
+        <a href="#" class="chapter-link"><span>Unit 2: দ্বিতীয় অধ্যায়</span><span class="chapter-meta">8 Sets</span></a>
+        <a href="#" class="chapter-link"><span>Unit 3: তৃতীয় অধ্যায়</span><span class="chapter-meta">12 Sets</span></a>
+        <a href="#" class="chapter-link"><span>Unit 4: চতুর্থ অধ্যায়</span><span class="chapter-meta">7 Sets</span></a>
+      </div>
     </div>
 
-    <!-- Main Container -->
-    <div class="main-container">
-        <div class="header-text">
-            <h1>দ্বাদশ শ্রেণি - তৃতীয় সেমিস্টার</h1>
-            <p>সম্পূর্ণ অ্যাকাডেমিক মক টেস্ট ও প্র্যাকটিস হাব</p>
-        </div>
-
-        <div class="demo-section">
-            <h2>টেস্ট প্যানেলে স্বাগতম</h2>
-            <p>যেকোনো অধ্যায়ের ওপর ক্লিক করে আপনার নির্ধারিত ইউজারনেম এবং পাসওয়ার্ড দিয়ে লগইন করুন।</p>
-            <div>
-                <a href="demo_file.html" class="demo-btn">ফ্রি ডেমো টেস্ট দিন</a>
-            </div>
-        </div>
-
-        <!-- Subject Grid -->
-        <div class="subject-grid">
-
-            <!-- Biology -->
-            <div class="subject-card">
-                <div class="subject-header">
-                    <div class="subject-icon">🧬</div>
-                    <div class="subject-title">জীববিদ্যা (Biology)</div>
-                </div>
-                <div class="chapter-list">
-                    <div class="chapter-link" onclick="requireLogin('biology_sem3_ch1.html')">
-                        <span>অধ্যায় ১: সপুষ্পক উদ্ভিদের যৌন জনন</span>
-                        <span class="chapter-meta">১২ সেট</span>
-                    </div>
-                    <div class="chapter-link" onclick="requireLogin('biology_sem3_ch2.html')">
-                        <span>অধ্যায় ২: মানুষের জনন</span>
-                        <span class="chapter-meta">আপকামিং</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Physics -->
-            <div class="subject-card">
-                <div class="subject-header">
-                    <div class="subject-icon">🧲</div>
-                    <div class="subject-title">পদার্থবিদ্যা (Physics)</div>
-                </div>
-                <div class="chapter-list">
-                    <div class="chapter-link" onclick="requireLogin('physics_sem3_ch1.html')">
-                        <span>অধ্যায় ১: স্থির তড়িৎ</span>
-                        <span class="chapter-meta">৫ সেট</span>
-                    </div>
-                    <div class="chapter-link" onclick="requireLogin('physics_sem3_ch2.html')">
-                        <span>অধ্যায় ২: প্রবাহী তড়িৎ</span>
-                        <span class="chapter-meta">আপকামিং</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Chemistry -->
-            <div class="subject-card">
-                <div class="subject-header">
-                    <div class="subject-icon">🧪</div>
-                    <div class="subject-title">রসায়ন (Chemistry)</div>
-                </div>
-                <div class="chapter-list">
-                    <div class="chapter-link" onclick="requireLogin('chem_sem3_ch1.html')">
-                        <span>অধ্যায় ১: কঠিন অবস্থা</span>
-                        <span class="chapter-meta">৬ সেট</span>
-                    </div>
-                    <div class="chapter-link" onclick="requireLogin('chem_sem3_ch2.html')">
-                        <span>অধ্যায় ২: দ্রবণ</span>
-                        <span class="chapter-meta">আপকামিং</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Math -->
-            <div class="subject-card">
-                <div class="subject-header">
-                    <div class="subject-icon">📐</div>
-                    <div class="subject-title">গণিত (Mathematics)</div>
-                </div>
-                <div class="chapter-list">
-                    <div class="chapter-link" onclick="requireLogin('math_sem3_ch1.html')">
-                        <span>অধ্যায় ১: সম্বন্ধ ও চিত্রণ</span>
-                        <span class="chapter-meta">৫ সেট</span>
-                    </div>
-                    <div class="chapter-link" onclick="requireLogin('math_sem3_ch2.html')">
-                        <span>অধ্যায় ২: ত্রিকোণমিতিক বিপরীত বৃত্তি</span>
-                        <span class="chapter-meta">আপকামিং</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bengali -->
-            <div class="subject-card">
-                <div class="subject-header">
-                    <div class="subject-icon">📖</div>
-                    <div class="subject-title">বাংলা (Bengali)</div>
-                </div>
-                <div class="chapter-list">
-                    <div class="chapter-link" onclick="requireLogin('bengali_sem3_ch1.html')">
-                        <span>গল্প ও প্রবন্ধ সেট</span>
-                        <span class="chapter-meta">৪ সেট</span>
-                    </div>
-                    <div class="chapter-link" onclick="requireLogin('bengali_sem3_ch2.html')">
-                        <span>কবিতা ও নাটক সেট</span>
-                        <span class="chapter-meta">আপকামিং</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- English -->
-            <div class="subject-card">
-                <div class="subject-header">
-                    <div class="subject-icon">📝</div>
-                    <div class="subject-title">ইংরেজি (English)</div>
-                </div>
-                <div class="chapter-list">
-                    <div class="chapter-link" onclick="requireLogin('english_sem3_ch1.html')">
-                        <span>Prose & Poetry</span>
-                        <span class="chapter-meta">৫ সেট</span>
-                    </div>
-                    <div class="chapter-link" onclick="requireLogin('english_sem3_grammar.html')">
-                        <span>Grammar & Textual</span>
-                        <span class="chapter-meta">আপকামিং</span>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+    <!-- CHEMISTRY (রসায়ন) -->
+    <div class="subject-card">
+      <div class="subject-header">
+        <div class="subject-icon">🧪</div>
+        <div class="subject-title">রসায়ন (Chemistry)</div>
+      </div>
+      <div class="chapter-list">
+        <a href="#" class="chapter-link"><span>Unit 1: প্রথম অধ্যায়</span><span class="chapter-meta">12 Sets</span></a>
+        <a href="#" class="chapter-link"><span>Unit 2: দ্বিতীয় অধ্যায়</span><span class="chapter-meta">9 Sets</span></a>
+        <a href="#" class="chapter-link"><span>Unit 3: তৃতীয় অধ্যায়</span><span class="chapter-meta">10 Sets</span></a>
+        <a href="#" class="chapter-link"><span>Unit 4: চতুর্থ অধ্যায়</span><span class="chapter-meta">8 Sets</span></a>
+      </div>
     </div>
 
-    <!-- Global Login Modal -->
-    <div class="login-overlay" id="loginOverlay">
-        <div class="login-modal">
-            <h2>লগইন করুন</h2>
-            <p>টেস্ট শুরু করতে আপনার ইউজারনেম ও পাসওয়ার্ড দিন</p>
-
-            <div class="input-group">
-                <label>ইউজারনেম</label>
-                <input type="text" id="usernameInput" placeholder="আপনার ইউজারনেম">
-            </div>
-            <div class="input-group">
-                <label>পাসওয়ার্ড</label>
-                <input type="password" id="passwordInput" placeholder="আপনার পাসওয়ার্ড">
-            </div>
-
-            <div class="error-msg" id="errorMsg">ইউজারনেম বা পাসওয়ার্ড ভুল! আবার চেষ্টা করুন।</div>
-
-            <button class="login-btn" onclick="verifyLogin()">লগইন</button>
-            <button class="cancel-btn" onclick="hideLogin()">বাতিল</button>
-
-            <div class="wa-box">
-                <p>ইউজারনেম ও পাসওয়ার্ড পেতে যোগাযোগ করুন:</p>
-                <a href="https://wa.me/918710032880?text=স্যার,%20আমার%20একাদশ%20শ্রেণির%20তৃতীয়%20সেমিস্টারের%20মক%20টেস্টের%20ইউজারনেম%20ও%20পাসওয়ার্ড%20প্রয়োজন।" target="_blank" class="wa-btn">
-                    💬 WhatsApp-এ মেসেজ করুন
-                </a>
-            </div>
-        </div>
+    <!-- MATHEMATICS (গণিত) -->
+    <div class="subject-card">
+      <div class="subject-header">
+        <div class="subject-icon">📐</div>
+        <div class="subject-title">গণিত (Mathematics)</div>
+      </div>
+      <div class="chapter-list">
+        <a href="#" class="chapter-link"><span>Unit 1: অ্যালজেব্রা (Algebra)</span><span class="chapter-meta">15 Sets</span></a>
+        <a href="#" class="chapter-link"><span>Unit 2: ক্যালকুলাস (Calculus)</span><span class="chapter-meta">10 Sets</span></a>
+        <a href="#" class="chapter-link"><span>Unit 3: জ্যামিতি (Geometry)</span><span class="chapter-meta">14 Sets</span></a>
+        <a href="#" class="chapter-link"><span>Unit 4: ভেক্টর (Vectors)</span><span class="chapter-meta">8 Sets</span></a>
+      </div>
     </div>
 
-    <script>
-        // =======================================================
-        //  এখানে আপনি যত খুশি ইউজারনেম ও পাসওয়ার্ড যোগ করতে পারবেন
-        //  নিয়ম: "ইউজারনেম": "পাসওয়ার্ড" (শেষেরটিতে কমা দেওয়ার দরকার নেই)
-        // =======================================================
-        const validUsers = {
-            "student11": "password123",
-            "jaba": "12345",         // যেমন jaba-র জন্য পাসওয়ার্ড
-            "rahul": "rahul2024",
-            "test_user": "demo123"
-        };
-        // =======================================================
+    <!-- BIOLOGY (জীববিদ্যা) -->
+    <div class="subject-card">
+      <div class="subject-header">
+        <div class="subject-icon">🧬</div>
+        <div class="subject-title">জীববিদ্যা (Biology)</div>
+      </div>
+      <div class="chapter-list">
+        <a href="#" class="chapter-link"><span>Unit 1: প্রথম অধ্যায়</span><span class="chapter-meta">10 Sets</span></a>
+        <a href="#" class="chapter-link"><span>Unit 2: দ্বিতীয় অধ্যায়</span><span class="chapter-meta">8 Sets</span></a>
+        <a href="#" class="chapter-link"><span>Unit 3: তৃতীয় অধ্যায়</span><span class="chapter-meta">11 Sets</span></a>
+        <a href="#" class="chapter-link"><span>Unit 4: চতুর্থ অধ্যায়</span><span class="chapter-meta">9 Sets</span></a>
+      </div>
+    </div>
 
-        let pendingTargetUrl = "";
+    <!-- BENGALI (বাংলা) -->
+    <div class="subject-card">
+      <div class="subject-header">
+        <div class="subject-icon">📝</div>
+        <div class="subject-title">বাংলা (Bengali)</div>
+      </div>
+      <div class="chapter-list">
+        <a href="#" class="chapter-link"><span>গল্প ও কবিতা অংশ</span><span class="chapter-meta">10 Sets</span></a>
+        <a href="#" class="chapter-link"><span>নাটক ও প্রবন্ধ অংশ</span><span class="chapter-meta">8 Sets</span></a>
+        <a href="#" class="chapter-link"><span>ভাষা ও ব্যাকরণ</span><span class="chapter-meta">12 Sets</span></a>
+      </div>
+    </div>
 
-        // Check login status
-        window.onload = function() {
-            if(localStorage.getItem('sem3_auth') === 'success') {
-                document.getElementById('authStatusText').innerHTML = "আনলকড 🔓";
-            }
-        };
+    <!-- ENGLISH (ইংরেজি) -->
+    <div class="subject-card">
+      <div class="subject-header">
+        <div class="subject-icon">📖</div>
+        <div class="subject-title">ইংরেজি (English)</div>
+      </div>
+      <div class="chapter-list">
+        <a href="#" class="chapter-link"><span>Prose & Poetry</span><span class="chapter-meta">12 Sets</span></a>
+        <a href="#" class="chapter-link"><span>Grammar & Vocabulary</span><span class="chapter-meta">15 Sets</span></a>
+        <a href="#" class="chapter-link"><span>Writing Skill</span><span class="chapter-meta">5 Sets</span></a>
+      </div>
+    </div>
 
-        function requireLogin(targetUrl) {
-            if (localStorage.getItem('sem3_auth') === 'success') {
-                window.location.href = targetUrl;
-            } else {
-                pendingTargetUrl = targetUrl;
-                document.getElementById('loginOverlay').classList.add('active');
-            }
-        }
+  </div>
+</div>
 
-        function hideLogin() {
-            document.getElementById('loginOverlay').classList.remove('active');
-            document.getElementById('errorMsg').style.display = 'none';
-        }
+<script>
+// =========================================================================
+// গ্লোবাল স্টুডেন্ট ডেটাবেস (GLOBAL STUDENT DATABASE)
+// =========================================================================
+const GLOBAL_USERS = {
+  // আপনার প্রয়োজনমতো এখানে ইউজারনেম ও পাসওয়ার্ড অ্যাড করতে পারবেন
+  "demo1": "1234",
+  "demo2": "1234",
+  "demo3": "1234",
+  "student100": "pass001",
+  "rohit2027": "abc456",
+  "ajay": "7251",
+  "sagun": "1234",
+  "anita": "1234"
+};
 
-        function verifyLogin() {
-            const user = document.getElementById('usernameInput').value.trim();
-            const pass = document.getElementById('passwordInput').value.trim();
+// ডেটাবেস লোকাল স্টোরেজে সেভ করার জন্য
+localStorage.setItem("testBazarGlobalUsers", JSON.stringify(GLOBAL_USERS));
+</script>
 
-            // এখানে চেক করা হচ্ছে ইউজারের নাম ডিকশনারিতে আছে কিনা এবং পাসওয়ার্ড মিলছে কিনা
-            if (validUsers.hasOwnProperty(user) && validUsers[user] === pass) {
-                // Login Success
-                localStorage.setItem('sem3_auth', 'success');
-                // ইউজারের নাম সেভ করে রাখা হলো টেস্ট লিমিট গোনার জন্য
-                localStorage.setItem('sem3_user', user);
-
-                document.getElementById('authStatusText').innerHTML = "আনলকড 🔓";
-
-                hideLogin();
-                if(pendingTargetUrl !== "") {
-                    window.location.href = pendingTargetUrl;
-                }
-            } else {
-                document.getElementById('errorMsg').style.display = 'block';
-            }
-        }
-    </script>
 </body>
 </html>
+
+
 
